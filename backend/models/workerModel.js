@@ -12,8 +12,25 @@ const createWorker = async (name, phone, email, constituency_id) => {
 };
 
 const getAllWorkers = async () => {
-  const result = await pool.query("SELECT * FROM field_workers");
+  const result = await pool.query("SELECT * FROM field_workers ORDER BY created_at DESC");
   return result.rows;
 };
 
-module.exports = { createWorker, getAllWorkers };
+const getWorkersByConstituency = async (constituency_id) => {
+  const query = `SELECT * FROM field_workers WHERE constituency_id = $1`;
+  const result = await pool.query(query, [constituency_id]);
+  return result.rows;
+};
+
+const getWorkerById = async (id) => {
+  const query = `SELECT * FROM field_workers WHERE id = $1`;
+  const result = await pool.query(query, [id]);
+  return result.rows[0];
+};
+
+module.exports = {
+  createWorker,
+  getAllWorkers,
+  getWorkersByConstituency,
+  getWorkerById
+};
