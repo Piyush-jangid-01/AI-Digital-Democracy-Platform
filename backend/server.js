@@ -1,17 +1,19 @@
-const express = require('express')
+const express = require('express');
 const cors = require("cors");
 const http = require("http");
+const path = require("path");
 require("dotenv").config();
 
 require("./config/db");
-const app = express()
+const app = express();
 const server = http.createServer(app);
 
 const { initSocket } = require("./utils/socketService");
 initSocket(server);
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const { verifyToken } = require("./middleware/authMiddleware");
 const { generalLimiter, authLimiter, feedbackLimiter } = require("./middleware/rateLimitMiddleware");
@@ -33,6 +35,7 @@ const escalationRoutes = require("./routes/escalationRoutes");
 const segmentationRoutes = require("./routes/segmentationRoutes");
 const predictiveRoutes = require("./routes/predictiveRoutes");
 const socialMediaRoutes = require("./routes/socialMediaRoutes");
+const announcementRoutes = require("./routes/announcementRoutes");
 
 app.use("/api/feedback", feedbackLimiter, feedbackRoutes);
 app.use("/api/constituencies", verifyToken, constituencyRoutes);
@@ -47,17 +50,11 @@ app.use("/api/escalation", escalationRoutes);
 app.use("/api/segmentation", segmentationRoutes);
 app.use("/api/predictive", predictiveRoutes);
 app.use("/api/social", socialMediaRoutes);
+app.use("/api/announcements", announcementRoutes);
 
 app.use(errorHandler);
-
 startScheduler();
 
-const PORT = process.env.PORT || 5000
-
-app.get('/', (req, res) => {
-  res.send({ message: "Digital Democracy Backend is running" })
-})
-
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-});
+const PORT = process.env.PORT || 5000;
+app.get('/', (req, res) => res.send({ message: "Digital Democracy Backend is running" }));
+server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
