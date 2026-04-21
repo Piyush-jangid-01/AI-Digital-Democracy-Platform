@@ -20,6 +20,7 @@ const { generalLimiter, authLimiter, feedbackLimiter } = require("./middleware/r
 const { errorHandler, requestLogger } = require("./middleware/errorMiddleware");
 const { startScheduler } = require("./utils/scheduler");
 
+
 app.use(requestLogger);
 app.use(generalLimiter);
 
@@ -36,6 +37,9 @@ const segmentationRoutes = require("./routes/segmentationRoutes");
 const predictiveRoutes = require("./routes/predictiveRoutes");
 const socialMediaRoutes = require("./routes/socialMediaRoutes");
 const announcementRoutes = require("./routes/announcementRoutes");
+const socialRoutes = require("./routes/socialRoutes");
+const nlpRoutes = require("./routes/nlpRoutes");
+const summaryRoutes = require("./routes/summaryRoutes");
 
 app.use("/api/feedback", feedbackLimiter, feedbackRoutes);
 app.use("/api/constituencies", verifyToken, constituencyRoutes);
@@ -49,8 +53,12 @@ app.use("/api/analytics", verifyToken, analyticsRoutes);
 app.use("/api/escalation", escalationRoutes);
 app.use("/api/segmentation", segmentationRoutes);
 app.use("/api/predictive", predictiveRoutes);
-app.use("/api/social", socialMediaRoutes);
+app.use("/api/social-media", socialMediaRoutes);
+app.use("/api/social", socialRoutes);
 app.use("/api/announcements", announcementRoutes);
+app.use("/api/nlp", nlpRoutes);
+app.use("/api/summary", summaryRoutes);
+app.use("/api/summary", verifyToken, summaryRoutes);
 
 app.use(errorHandler);
 startScheduler();

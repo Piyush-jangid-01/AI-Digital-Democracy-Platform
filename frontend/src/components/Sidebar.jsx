@@ -2,14 +2,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const menuItems = [
-  { path: "/admin", icon: "📊", label: "Dashboard" },
+  { path: "/", icon: "📊", label: "Dashboard" },
   { path: "/feedback", icon: "💬", label: "Feedback" },
   { path: "/analytics", icon: "📈", label: "Analytics" },
+  { path: "/social", icon: "📡", label: "Social Monitor" },
   { path: "/workers", icon: "👷", label: "Field Workers" },
   { path: "/tasks", icon: "📋", label: "Tasks" },
+  { path: "/voters", icon: "🗳️", label: "Voters" },
   { path: "/surveys", icon: "📝", label: "Surveys" },
   { path: "/constituencies", icon: "🏛️", label: "Constituencies" },
-  { path: "/announcements", icon: "📢", label: "Announcements" },
+  { path: "/users", icon: "👥", label: "Users" },
+  { path: "/profile", icon: "⚙️", label: "Profile & Settings" },
 ];
 
 const Sidebar = () => {

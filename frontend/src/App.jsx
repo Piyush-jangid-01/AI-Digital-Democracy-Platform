@@ -13,6 +13,12 @@ import Analytics from "./pages/Analytics";
 import Constituencies from "./pages/Constituencies";
 import Announcements from "./pages/Announcements";
 import CitizenDashboard from "./pages/CitizenDashboard";
+import SocialMoodMonitor from "./pages/SocialMoodMonitor";
+import NLPInsights from "./pages/NLPInsights";
+import Reports from "./pages/Reports";
+import Profile from "./pages/Profile";
+
+
 
 function App() {
   return (
@@ -23,10 +29,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/citizen-login" element={<UserLogin />} />
 
-          {/* Citizen only */}
           <Route path="/citizen" element={<ProtectedRoute><CitizenDashboard /></ProtectedRoute>} />
 
-          {/* Admin only */}
           <Route path="/admin" element={<ProtectedRoute adminOnly><Dashboard /></ProtectedRoute>} />
           <Route path="/feedback" element={<ProtectedRoute adminOnly><Feedback /></ProtectedRoute>} />
           <Route path="/workers" element={<ProtectedRoute adminOnly><Workers /></ProtectedRoute>} />
@@ -35,7 +39,10 @@ function App() {
           <Route path="/analytics" element={<ProtectedRoute adminOnly><Analytics /></ProtectedRoute>} />
           <Route path="/constituencies" element={<ProtectedRoute adminOnly><Constituencies /></ProtectedRoute>} />
           <Route path="/announcements" element={<ProtectedRoute adminOnly><Announcements /></ProtectedRoute>} />
-
+          <Route path="/social" element={<ProtectedRoute adminOnly><SocialMoodMonitor /></ProtectedRoute>} />
+          <Route path="/nlp" element={<ProtectedRoute adminOnly><NLPInsights /></ProtectedRoute>} />
+          <Route path="/reports" element={<ProtectedRoute adminOnly><Reports /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
